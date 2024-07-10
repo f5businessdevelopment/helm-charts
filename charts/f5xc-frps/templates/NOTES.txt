@@ -8,3 +8,20 @@ To learn more about the release, try:
 
   $ helm status {{ .Release.Name }}
   $ helm get all {{ .Release.Name }}
+
+**Sample frpc config**
+
+serverAddr = "frpstcp.example.com" # the domain name exposed by the XC TCP LB
+serverPort = {{ .Values.bindPort }} # the port exposed by the TCP LB in XC
+transport.tls.enable = false # this needs to be fixed
+log.level = "trace" # this can be set to debug info or warning
+log.to = "console" # if this is anything other than 'console' logs will not be available via the XC console
+auth.method = "token"
+auth.token = "{{ .Values.authToken }}"
+
+[[proxies]]
+name = "compose_test_web"
+type = "http"
+localIP = "web" # this is the name of the docker compose service
+localPort = 5000 # this is the port exposed by the container NOT the host port exposed by docker
+customDomains = ["frps.default"] # this is the service name and namespace in XC
