@@ -1,0 +1,13 @@
+# Default values for f5xc-frps.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+bindPort: 7443
+vhostHTTPPort: 8080
+vhostHTTPSPort: 8443
+
+authToken: 123456789ABCDEF
+
+serverCert: 
+serverKey:
+caCert: 

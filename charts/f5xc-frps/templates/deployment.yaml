@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "f5xc-frps.fullname" . }}
+  labels:
+    {{- include "f5xc-frps.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "f5xc-frps.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        {{- include "f5xc-frps.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - image: ghcr.io/mjmenger/frps
+          name: frps
+          ports:
+            - name: controller
+              containerPort: {{ .Values.bindPort }}
+            - name: http
+              containerPort: {{ .Values.vhostHTTPPort }}
+            - name: https
+              containerPort: {{ .Values.vhostHTTPSPort }}
+          volumeMounts:
+            - mountPath: /etc/frp/frps.toml
+              name: frps-config
+              subPath: frps.toml
+            - mountPath: /etc/frp/certs
+              name: frps-certs
+      restartPolicy: Always
+      volumes:
+        - name: frps-config
+          configMap:
+            name: {{ include "f5xc-frps.fullname" . }}
+        - name: frps-certs
+          secret:
+            secretName: {{ include "f5xc-frps.fullname" . }}
