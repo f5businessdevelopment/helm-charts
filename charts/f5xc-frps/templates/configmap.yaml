@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "f5xc-frps.fullname" . }}
+  labels:
+    {{- include "f5xc-frps.labels" . | nindent 4 }}
+data:
+  frps.toml: "bindAddr = \"0.0.0.0\"\nbindPort = {{ .Values.bindPort }}\n\nvhostHTTPPort = {{ .Values.vhostHTTPPort }}\nvhostHTTPSPort
+    = {{ .Values.vhostHTTPSPort }}\n\nlog.to = \"console\"\nlog.level = \"trace\"\nlog.maxDays = 1\nlog.disablePrintColor
+    = true \n\nauth.method = \"token\"\nauth.token = \"{{ .Values.authToken }}\"\n\n"
