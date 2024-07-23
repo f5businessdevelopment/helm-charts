@@ -7,13 +7,13 @@ metadata:
 spec:
   ports:
     - name: "control"
-      port: 7443
-      targetPort: 7443
+      port: {{ .Values.bindPort }}
+      targetPort: {{ .Values.bindPort }}
     - name: "http"
-      port: 8080
-      targetPort: 8080
+      port: {{ .Values.vhostHTTPPort }}
+      targetPort: {{ .Values.vhostHTTPPort }}
     - name: "https"
-      port: 8443
-      targetPort: 8443
+      port: {{ .Values.vhostHTTPSPort }}
+      targetPort: {{ .Values.vhostHTTPSPort }}
   selector:
     {{- include "f5xc-frps.selectorLabels" . | nindent 4 }}
