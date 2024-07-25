@@ -17,7 +17,8 @@ spec:
         {{- include "f5xc-frps.labels" . | nindent 8 }}
     spec:
       containers:
-        - image: ghcr.io/mjmenger/frps
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}        
           name: frps
           ports:
             - name: controller
