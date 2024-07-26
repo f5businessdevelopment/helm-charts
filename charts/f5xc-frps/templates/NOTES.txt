@@ -10,6 +10,8 @@ To learn more about the release, try:
   $ helm get all {{ .Release.Name }}
 
 **Sample frpc config**
+Note: *serverAddr* must be changed to the public endpoint of the frp server
+Note: *name*, *localIP*, and *localPort* must be adjusted to reflect the proxied application
 
 serverAddr = "frpstcp.example.com" # the domain name exposed by the XC TCP LB
 serverPort = {{ .Values.bindPort }} # the port exposed by the TCP LB in XC
@@ -24,4 +26,4 @@ name = "compose_test_web"
 type = "http"
 localIP = "web" # this is the name of the docker compose service
 localPort = 5000 # this is the port exposed by the container NOT the host port exposed by docker
-customDomains = ["frps.default"] # this is the service name and namespace in XC
+customDomains = ["{{ include "f5xc-frps.fullname" . }}.{{ .Release.Namespace }}"] # this is the service name and namespace in XC
