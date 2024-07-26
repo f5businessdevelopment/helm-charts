@@ -3,6 +3,16 @@ entries:
   f5xc-frps:
   - apiVersion: v2
     appVersion: 0.58.1
+    created: "2024-07-26T20:00:58.188480469Z"
+    description: Deploy frp server on F5 App Stack
+    digest: 1af4000f1430c7225bf085435ea55b7eaaf757f0230543bad6f5be13e7f18965
+    name: f5xc-frps
+    type: application
+    urls:
+    - https://github.com/f5businessdevelopment/helm-charts/releases/download/f5xc-frps-0.0.5/f5xc-frps-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
+    appVersion: 0.58.1
     created: "2024-07-25T15:43:03.061874642Z"
     description: Deploy frp server on F5 App Stack
     digest: e3bcd6d1f164d2f4b83c300373edb644ee75bd93335fdac14436e68d7884e405
@@ -82,4 +92,4 @@ entries:
     urls:
     - https://github.com/f5businessdevelopment/helm-charts/releases/download/portkeyenterprise-0.1.2/portkeyenterprise-0.1.2.tgz
     version: 0.1.2
-generated: "2024-07-25T15:43:03.061902304Z"
+generated: "2024-07-26T20:00:58.188507429Z"
