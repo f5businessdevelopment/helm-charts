@@ -31,13 +31,17 @@ spec:
             - mountPath: /etc/frp/frps.toml
               name: frps-config
               subPath: frps.toml
+            {{- if .Values.caCert }}  
             - mountPath: /etc/frp/certs
               name: frps-certs
+            {{- end }}
       restartPolicy: Always
       volumes:
         - name: frps-config
           configMap:
             name: {{ include "f5xc-frps.fullname" . }}
+        {{- if .Values.caCert }}
         - name: frps-certs
           secret:
             secretName: {{ include "f5xc-frps.fullname" . }}
+        {{- end }}
