@@ -17,3 +17,9 @@ authToken: 123456789ABCDEF
 serverCert: 
 serverKey:
 caCert: 
+
+frpsPublicAddress: frpscontrol.example.com
+frpcProxyName: exampleproxyconfig
+frpcProxyType: http
+frpcProxyAddress: web
+frpcProxyPort: 5000
