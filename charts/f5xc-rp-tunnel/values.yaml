@@ -1,0 +1,159 @@
+# Default values for f5xc-rp-tunnel.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: ghcr.io/mjmenger/f5xc-rp-tunnel-server
+  # This sets the pull policy for images.
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "0.0.6"
+
+environment:
+  RP_SERVER_TUNNEL_PORT: '3335'
+  RP_SERVER_NAME: 'myhost.com'
+  RP_SERVER_SSH_PORT: '2222'
+  RP_SERVER_HTTP_PORT: '8080'
+  SSH_AUTHORIZED_KEY: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+T8Jj+XUq9tT3fP//kCxDGflCYs8XQXBx2guzR5yk5Fx/PLnCPFdZeUGzCFhHWj9img17BqewZ3+rG3fGq/N720jIqZHVemaHhrvvsu0d5rkh4FbdnKsBOlNtZ2K+7SR//UblJCcfxPSrbFt+nI5y3TilK96GZM/yaxYX/0xij0+3d/TUbJjJwx9Eqgp+wPwWaoueUPBJF44fZqfulzvN6nDHrgZc+RizDrorPek0Ng7hcO7YpiEIrwhBSY7MmkimNmAELM65HmLY4r1XBeSntEFh0rXDe2rjDwl6U4JrBn/77BGKWXBo4hFSqJcWD0NE96ibi55AOEKVykJPxOvXo9LPUWvQPqIqsMBnaZ/xZuWdG1JwKgE2aYbJNvhcz9N0uufTX2E2t5jgPVTReL1g30fv+g5lCCrSST7tNN7GopsfDifYdq8QiCf5Dxvh/dbKjMAXMVyFGsfkYr5Idugbh2G4uAQltAgMrsUoYfU5+YsKRXY/5B1KLdvXyAPJ/P+JemxCTI2GFsPxJIBjVNOX9dY7+v3i+oQ8e1gv5K260R8vt4Ogufqrc6efBwoCDQctagaT4BQTFkgjK5inrUtOP9fbW+gHElwoXYA53f+vJSwQ6+IZQKxQBXN4QG89xf9H7mH5Lm5hfbHGyhKpBvMrAxESVFxNtFXgamM8m6AiLw=='
+
+# public keys allowed access to the service
+authorizedKeys:
+
+ports:
+  - name: ssh
+    containerPort: 22
+    protocol: TCP
+  - name: http
+    containerPort: 80
+    protocol: TCP
+
+servicePorts:
+  - port: 2222
+    targetPort: ssh
+    protocol: TCP
+    name: ssh  
+  - port: 8080
+    targetPort: http
+    protocol: TCP
+    name: http  
+
+
+# This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+# This is to override the chart name.
+nameOverride: ""
+fullnameOverride: ""
+
+#This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ 
+podAnnotations: {}
+# This is for setting Kubernetes Labels to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: 
+  capabilities:
+    add:
+    - SYS_CHROOT
+    - AUDIT_CONTROL
+    - AUDIT_WRITE
+  runAsGroup: 0
+  runAsUser: 0
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 80
+
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+#This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+  # - name: authorizedkeys
+  #   secret:
+  #     secretName: authorizedkeys
+  #     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+  # - name: authorizedkeys
+  #   mountPath: /var/tmp/rptunnel
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
