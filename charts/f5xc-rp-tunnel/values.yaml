@@ -11,11 +11,14 @@ image:
   # This sets the pull policy for images.
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.6"
+  # tag: "0.0.6"
 
+# RP_SERVER_NAME is the name and namespace of the service exposing the tunnel server
+# RP_SERVER_SSH_PORT is the port on which ssh is exposed by the service 
+# RP_SERVER_HTTP_PORT is the port on which http is exposed by the service
 environment:
   RP_SERVER_TUNNEL_PORT: '3335'
-  RP_SERVER_NAME: 'myhost.com'
+  RP_SERVER_NAME: 'testrelease-f5xc-rp-tunnel.rptunnel'
   RP_SERVER_SSH_PORT: '2222'
   RP_SERVER_HTTP_PORT: '8080'
   SSH_AUTHORIZED_KEY: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+T8Jj+XUq9tT3fP//kCxDGflCYs8XQXBx2guzR5yk5Fx/PLnCPFdZeUGzCFhHWj9img17BqewZ3+rG3fGq/N720jIqZHVemaHhrvvsu0d5rkh4FbdnKsBOlNtZ2K+7SR//UblJCcfxPSrbFt+nI5y3TilK96GZM/yaxYX/0xij0+3d/TUbJjJwx9Eqgp+wPwWaoueUPBJF44fZqfulzvN6nDHrgZc+RizDrorPek0Ng7hcO7YpiEIrwhBSY7MmkimNmAELM65HmLY4r1XBeSntEFh0rXDe2rjDwl6U4JrBn/77BGKWXBo4hFSqJcWD0NE96ibi55AOEKVykJPxOvXo9LPUWvQPqIqsMBnaZ/xZuWdG1JwKgE2aYbJNvhcz9N0uufTX2E2t5jgPVTReL1g30fv+g5lCCrSST7tNN7GopsfDifYdq8QiCf5Dxvh/dbKjMAXMVyFGsfkYr5Idugbh2G4uAQltAgMrsUoYfU5+YsKRXY/5B1KLdvXyAPJ/P+JemxCTI2GFsPxJIBjVNOX9dY7+v3i+oQ8e1gv5K260R8vt4Ogufqrc6efBwoCDQctagaT4BQTFkgjK5inrUtOP9fbW+gHElwoXYA53f+vJSwQ6+IZQKxQBXN4QG89xf9H7mH5Lm5hfbHGyhKpBvMrAxESVFxNtFXgamM8m6AiLw=='
