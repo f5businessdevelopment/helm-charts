@@ -34,6 +34,8 @@ ports:
     containerPort: 80
     protocol: TCP
 
+serviceType: ClusterIP
+
 servicePorts:
   - port: 2222
     targetPort: ssh

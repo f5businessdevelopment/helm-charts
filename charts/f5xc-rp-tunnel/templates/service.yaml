@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "f5xc-rp-tunnel.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.serviceType }}
   {{- with .Values.servicePorts }}
   ports:
     {{ toYaml . | nindent 4 }}
