@@ -5,9 +5,6 @@ metadata:
   labels:
     {{- include "f5xc-rp-tunnel.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "f5xc-rp-tunnel.selectorLabels" . | nindent 6 }}
