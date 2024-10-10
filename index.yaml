@@ -84,6 +84,16 @@ entries:
   f5xc-rp-tunnel:
   - apiVersion: v2
     appVersion: 0.0.7
+    created: "2024-10-10T18:15:41.800302224Z"
+    description: Deploy reverse proxy tunnel server on F5 App Stack
+    digest: 57f0d791c9db23a496add528f24b088c4b024355967e734f48a7d6ba08b1eef0
+    name: f5xc-rp-tunnel
+    type: application
+    urls:
+    - https://github.com/f5businessdevelopment/helm-charts/releases/download/f5xc-rp-tunnel-0.0.4/f5xc-rp-tunnel-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: 0.0.7
     created: "2024-10-10T15:33:11.192028105Z"
     description: A Helm chart for Kubernetes
     digest: aaad54884a953cc8658e6a0f50214db4fc3e0576893955b914804b0953b4379e
@@ -133,4 +143,4 @@ entries:
     urls:
     - https://github.com/f5businessdevelopment/helm-charts/releases/download/portkeyenterprise-0.1.2/portkeyenterprise-0.1.2.tgz
     version: 0.1.2
-generated: "2024-10-10T15:33:11.192057079Z"
+generated: "2024-10-10T18:15:41.800331919Z"
