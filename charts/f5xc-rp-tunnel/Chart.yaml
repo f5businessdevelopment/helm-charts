@@ -1,6 +1,6 @@
 apiVersion: v2
 name: f5xc-rp-tunnel
-description: A Helm chart for Kubernetes
+description: Deploy reverse proxy tunnel server on F5 App Stack
 
 # A chart can be either an 'application' or a 'library' chart.
 #
