@@ -1,0 +1,117 @@
+# Default values for f5xc-rp-tunnel.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: ghcr.io/mjmenger/f5xc-rp-tunnel-server
+  # This sets the pull policy for images.
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  # tag: "0.0.6"
+
+# RP_SERVER_NAME is the name and namespace of the service exposing the tunnel server
+# RP_SERVER_SSH_PORT is the port on which ssh is exposed by the service 
+# RP_SERVER_HTTP_PORT is the port on which http is exposed by the service
+environment:
+  RP_SERVER_TUNNEL_PORT: '3335'
+  RP_SERVER_NAME: 'abc.def'
+  RP_SERVER_SSH_PORT: '2222'
+  RP_SERVER_HTTP_PORT: '8080'
+  SSH_AUTHORIZED_KEY: 'ssh-rsa AAAA...AiLw=='
+
+# public keys allowed access to the service
+authorizedKeys:
+
+ports:
+  - name: ssh
+    containerPort: 22
+    protocol: TCP
+  - name: http
+    containerPort: 80
+    protocol: TCP
+
+servicePorts:
+  - port: 2222
+    targetPort: ssh
+    protocol: TCP
+    name: ssh  
+  - port: 8080
+    targetPort: http
+    protocol: TCP
+    name: http  
+
+#This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ 
+podAnnotations: {}
+# This is for setting Kubernetes Labels to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: 
+  capabilities:
+    add:
+    - SYS_CHROOT
+    - AUDIT_CONTROL
+    - AUDIT_WRITE
+  runAsGroup: 0
+  runAsUser: 0
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+  # - name: authorizedkeys
+  #   secret:
+  #     secretName: authorizedkeys
+  #     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+  # - name: authorizedkeys
+  #   mountPath: /var/tmp/rptunnel
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
